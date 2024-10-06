@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { WeatherResponse, WeatherApiResponse } from "@/types/weather";
-import LocationAutocomplete from "@/components/location-autocomplite";
+import { WeatherResponse } from "@/types/weather";
+import LocationAutocomplete from "@/components/location-autocomplete";
+import CurrentWeather from "@/components/current-weather";
+import DailyForecast from "@/components/daily-forecast";
+import WeatherChart from "@/components/weather-chart";
 
 export default function Home() {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  console.log(loading); // TODO: implement // eslint override :)
 
   const handleLocationSelect = async (
     location: string,
@@ -31,7 +31,7 @@ export default function Home() {
       }
 
       const response = await fetch(url);
-      const data: WeatherApiResponse = await response.json();
+      const data = await response.json();
 
       if (response.ok && "weather" in data) {
         setWeatherData(data);
@@ -48,30 +48,20 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Weather App</h1>
+      <h1 className="text-3xl font-bold mb-6">Weather App</h1>
       <LocationAutocomplete onLocationSelect={handleLocationSelect} />
       {error && (
-        <Alert variant="destructive" className="mb-4">
+        <Alert variant="destructive" className="my-4">
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}
+      {loading && <p className="text-center my-4">Loading weather data...</p>}
       {weatherData && (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              Weather for {weatherData.coordinates.lat.toFixed(4)},{" "}
-              {weatherData.coordinates.lon.toFixed(4)}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>Latitude: {weatherData.coordinates.lat}</p>
-            <p>Longitude: {weatherData.coordinates.lon}</p>
-            {/* Display weather data here */}
-            <pre className="mt-4 p-4 bg-gray-100 rounded overflow-auto">
-              {JSON.stringify(weatherData.weather, null, 2)}
-            </pre>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <CurrentWeather data={weatherData} />
+          <DailyForecast data={weatherData} />
+          <WeatherChart data={weatherData} />
+        </div>
       )}
     </main>
   );

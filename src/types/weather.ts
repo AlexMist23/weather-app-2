@@ -1,5 +1,3 @@
-// types/weather.ts
-
 export interface Coordinates {
   lat: number;
   lon: number;
@@ -24,11 +22,11 @@ export interface WeatherData {
         wind_speed: string;
       };
     };
-    timeseries: TimeseriesEntry[];
+    timeseries: [TimeseriesEntryWithAllData, ...TimeseriesEntry[]];
   };
 }
 
-export interface TimeseriesEntry {
+export interface TimeseriesEntryBase {
   time: string;
   data: {
     instant: {
@@ -46,6 +44,32 @@ export interface TimeseriesEntry {
         symbol_code: string;
       };
     };
+  };
+}
+
+export interface TimeseriesEntryWithAllData extends TimeseriesEntryBase {
+  data: TimeseriesEntryBase["data"] & {
+    next_1_hours: {
+      summary: {
+        symbol_code: string;
+      };
+      details: {
+        precipitation_amount: number;
+      };
+    };
+    next_6_hours: {
+      summary: {
+        symbol_code: string;
+      };
+      details: {
+        precipitation_amount: number;
+      };
+    };
+  };
+}
+
+export interface TimeseriesEntry extends TimeseriesEntryBase {
+  data: TimeseriesEntryBase["data"] & {
     next_1_hours?: {
       summary: {
         symbol_code: string;
