@@ -11,6 +11,8 @@ export default function Home() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  console.log(loading); // TODO: implement // eslint override :)
+
   const handleLocationSelect = async (
     location: string,
     lat: number,
