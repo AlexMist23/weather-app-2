@@ -3,13 +3,13 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { WeatherResponse } from "@/types/weather";
 import {
-  LineChart,
   Line,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   ResponsiveContainer,
+  ComposedChart,
 } from "recharts";
 import {
   ChartContainer,
@@ -30,7 +30,7 @@ export default function WeatherChart({ data }: { data: WeatherResponse }) {
     }));
 
   return (
-    <Card className="col-span-2">
+    <Card className="col-span-full">
       <CardHeader>
         <CardTitle>24-Hour Weather Forecast</CardTitle>
       </CardHeader>
@@ -50,10 +50,10 @@ export default function WeatherChart({ data }: { data: WeatherResponse }) {
               color: "hsl(var(--chart-3))",
             },
           }}
-          className="h-[400px]"
+          className="h-[400px] w-full"
         >
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
+            <ComposedChart
               data={chartData}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
@@ -82,7 +82,7 @@ export default function WeatherChart({ data }: { data: WeatherResponse }) {
                 fill="var(--color-precipitation)"
                 name="Precipitation"
               />
-            </LineChart>
+            </ComposedChart>
           </ResponsiveContainer>
         </ChartContainer>
       </CardContent>
