@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { WeatherResponse } from "@/types/weather";
-import LocationAutocomplete from "@/components/location-autocomplete";
-import CurrentWeather from "@/components/current-weather";
-import DailyForecast from "@/components/daily-forecast";
-import WeatherChart from "@/components/weather-chart";
-import AirQuality from "@/components/air-quality";
-import SunriseSunset from "@/components/sunrise-sunset";
-import WeatherAlerts from "@/components/weather-alerts";
+import LocationAutocomplete from "@/components/weather/location-autocomplete";
+import CurrentWeather from "@/components/weather/current-weather";
+import DailyForecast from "@/components/weather/daily-forecast";
+import WeatherChart from "@/components/weather/weather-chart";
+import AirQuality from "@/components/weather/air-quality";
+import SunriseSunset from "@/components/weather/sunrise-sunset";
+import WeatherAlerts from "@/components/weather/weather-alerts";
 
 export default function Home() {
   const [weatherData, setWeatherData] = useState<WeatherResponse | null>(null);
@@ -54,7 +54,6 @@ export default function Home() {
 
   return (
     <main className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Weather App</h1>
       <LocationAutocomplete onLocationSelect={handleLocationSelect} />
       {error && (
         <Alert variant="destructive" className="my-4">
