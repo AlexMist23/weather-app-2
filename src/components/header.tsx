@@ -9,7 +9,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "z-10 fixed w-full bg-background/80 backdrop-blur border-b shadow-sm"
+          "z-10 w-full bg-background/80 backdrop-blur border-b shadow-sm"
         )}
       >
         <div className="flex items-center h-16 gap-8 px-4 mx-auto text-sm xl:container">
